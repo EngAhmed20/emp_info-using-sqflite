@@ -1,27 +1,14 @@
 import 'package:emp_info/manager/employee_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../db/db_helper.dart';
 import '../../models/emp_model.dart';
 import 'widgets/add_new_customer.dart';
 import 'widgets/home_list_item.dart';
 
-class HomeScr extends StatefulWidget {
+class HomeScr extends StatelessWidget {
   const HomeScr({super.key});
   static const String routeName = '/home';
 
-  @override
-  State<HomeScr> createState() => _HomeScrState();
-}
-
-class _HomeScrState extends State<HomeScr> {
-
-  @override
-  void initState() {
-    super.initState();
-
-  }
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<EmployeeCubit,EmployeeState>(

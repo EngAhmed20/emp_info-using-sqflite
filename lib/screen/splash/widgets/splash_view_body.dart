@@ -30,7 +30,7 @@ class _SplashViewBodyState extends State<SplashViewBody>with SingleTickerProvide
             AnimatedBuilder(animation: slidingAnimation, builder:
             (context,_){
               return SlideTransition(position: slidingAnimation,
-              child:  Text('اجعل تعاملاتك اسهل',style: TextStyle(
+              child:  Text('make your business easy',style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold
               ),textAlign: TextAlign.center,),);
