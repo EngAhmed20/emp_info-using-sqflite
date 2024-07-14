@@ -1,4 +1,6 @@
+import 'package:emp_info/manager/employee_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../db/db_helper.dart';
 import '../../models/emp_model.dart';
@@ -14,47 +16,42 @@ class HomeScr extends StatefulWidget {
 }
 
 class _HomeScrState extends State<HomeScr> {
-   List <Employee>? empList;
-   DbHelper dbHelper=DbHelper();
-   void updateList()async{
-   empList =await dbHelper.getAllEmp();
-   setState(() {
-   });
-  }
+
   @override
   void initState() {
     super.initState();
-    updateList();
+
   }
   @override
   Widget build(BuildContext context) {
-    if (empList==null)
-    {
-      empList=[];
-      updateList();
-    }
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Employees Info'),
-        elevation: 0,
+    return BlocConsumer<EmployeeCubit,EmployeeState>(
+      builder: (context,index){
+        var cubit=EmployeeCubit.get(context);
+        return Scaffold(
+          appBar: AppBar(
+            title: Text('Employees Info'),
+            elevation: 0,
 
-        centerTitle: true,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(10),
-        child: home_list_view(emp:empList!,),
-      ),
-      floatingActionButton: FloatingActionButton(onPressed: () {
-        showModalBottomSheet(
-          isScrollControlled:true,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-            context: context, builder:(context){
-          return addNewCustomer();
-        });
+            centerTitle: true,
+          ),
+          body: Padding(
+            padding: const EdgeInsets.all(10),
+            child: home_list_view(emp:cubit.emp,),
+          ),
+          floatingActionButton: FloatingActionButton(onPressed: () {
+            showModalBottomSheet(
+                isScrollControlled:true,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                context: context, builder:(context){
+              return addNewCustomer();
+            });
+          },
+            child: Icon(Icons.add,),
+
+          ),
+        );
       },
-        child: Icon(Icons.add,),
-
-      ),
+      listener: (context,index){},
     );
   }
 }

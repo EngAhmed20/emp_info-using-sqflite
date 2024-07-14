@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 
 import '../../../core/widgets/custom_text_form.dart';
 import '../../../db/db_helper.dart';
+import '../../../manager/employee_cubit.dart';
 
 class addNewCustomer extends StatefulWidget {
   addNewCustomer({super.key});
@@ -153,6 +154,7 @@ class _addNewCustomerState extends State<addNewCustomer> {
             children: [
               Expanded(child: custom_button(text: 'Save',backgroundColor: Colors.blue,
               onTap: ()async{
+                var cubit=EmployeeCubit.get(context);
                 Employee emp=Employee.getNewEmpty();
                 emp.name=nameController.text;
                 emp.phone=phoneController.text;
@@ -161,7 +163,7 @@ class _addNewCustomerState extends State<addNewCustomer> {
                 emp.hiringDate=hiringDate.text;
                 emp.gender=gender??'';
                 emp.status=status??'';
-                await dbHelper.insertNewEmployee(emp);
+                await cubit.addEmp(emp);
                 Navigator.pop(context,true);
 
 

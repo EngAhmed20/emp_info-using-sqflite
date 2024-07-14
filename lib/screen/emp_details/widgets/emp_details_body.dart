@@ -2,6 +2,7 @@ import 'package:emp_info/db/db_helper.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/widgets/custom_text_form.dart';
+import '../../../manager/employee_cubit.dart';
 import '../../../models/emp_model.dart';
 import '../../home/widgets/add_new_customer.dart';
 
@@ -40,6 +41,7 @@ class _EmpDetailsBodyState extends State<EmpDetailsBody> {
     hiringDate.text=widget.emp.hiringDate;
     gender=widget.emp.gender;
     status=widget.emp.status;
+    var cubit=EmployeeCubit.get(context);
     return Padding(
       padding: EdgeInsets.only(
         right: 16,
@@ -155,7 +157,7 @@ class _EmpDetailsBodyState extends State<EmpDetailsBody> {
             children: [
               Expanded(child: custom_button(text: 'Save changes',backgroundColor: Colors.blue,
                 onTap: ()async{
-                Employee emp=widget.emp;
+                  Employee emp=widget.emp;
                 emp.name=nameController.text;
                 emp.phone=phoneController.text;
                 emp.position=positionController.text;
@@ -163,13 +165,13 @@ class _EmpDetailsBodyState extends State<EmpDetailsBody> {
                 emp.hiringDate=hiringDate.text;
                 emp.gender=gender??'';
                 emp.status=status??'';
-                await dbHelper.updateEmployee(emp);
+                await cubit.updateEmp(emp);
                  Navigator.pop(context,true);
                 },width: 100,
               ),),
               const  SizedBox(width: 30,),
               Expanded(child: custom_button(text: ' delete',backgroundColor: Colors.red,onTap: ()async{
-                await dbHelper.deleteEmployee(widget.emp);
+                await cubit.deleteEmp(widget.emp);
                 Navigator.of(context).pop();
               },width: 100,)),
             ],
